@@ -6,16 +6,15 @@ class Post < ActiveRecord::Base
 
   #put new code here
   def self.from_today
-    self.all.select {|post| post.created_at >= Time.zone.today.beginning_of_day}
-    
+    where("created_at >=?", Time.zone.today.beginning_of_day)
   end
-
+   
   def self.old_news
-    self.all.select {|post| post.created_at < Time.zone.today.beginning_of_day}
+    where("created_at <?", Time.zone.today.beginning_of_day)
   end
 
   def self.by_author(author_id)
-    self.all.select {|post| post.author.id == author_id}
+    where( author: author_id)
   end
 
 
